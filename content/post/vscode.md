@@ -10,7 +10,8 @@ categories = '配置文件'
 
 ```json
 {
-    "editor.fontSize": 20,
+    "window.zoomLevel": 1.1,
+    "editor.fontSize": 18,
     "editor.fontFamily": "consolas",
     "editor.minimap.enabled": false, // Disable minimap
     "editor.wordWrap": "on", // when a line is two long, wrap it.
@@ -27,6 +28,7 @@ categories = '配置文件'
     "workbench.colorTheme": "Shades of Purple (Super Dark)",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.productIconTheme": "developer-icons",
+    "workbench.tree.indent": 35,
 
     "terminal.integrated.fontSize": 18,
     "terminal.integrated.lineHeight": 1.5,
@@ -51,16 +53,16 @@ categories = '配置文件'
         { "before": ["W"], "after": ["$"] },
         { "before": ["B"], "after": ["^"] },
         { "before": ["g", "h"], "commands": ["editor.action.showHover"] },
-        { "before": ["g", "s"], "commands": ["editor.action.indentationToSpaces"] },
-        { "before": ["<leader>", "a"], "commands": ["workbench.action.createTerminalEditorSide"] },
+        { "before": ["g", "s"], "commands": ["opensshremotes.openEmptyWindow"] },
+        { "before": ["<leader>", "q"], "commands": ["workbench.files.action.collapseExplorerFolders"] },
+        { "before": ["<leader>", "w"], "commands": ["workbench.action.tasks.runTask"] },
         { "before": ["<leader>", "e"], "commands": ["workbench.view.explorer"] },
-        { "before": ["<leader>", "t"], "commands": ["workbench.action.tasks.runTask"] },
-        { "before": ["<leader>", "f"], "commands": ["workbench.view.search"] },
+        { "before": ["<leader>", "a"], "commands": ["workbench.action.createTerminalEditorSide"] },
+        { "before": ["<leader>", "f"], "commands": ["workbench.action.quickOpen"] },
         { "before": ["<leader>", "x"], "commands": ["workbench.action.debug.selectandstart"] },
         { "before": ["<leader>", "d"], "commands": ["workbench.debug.action.toggleRepl"] },
-        { "before": ["<leader>", "s"], "commands": ["opensshremotes.openEmptyWindow"] },
+        { "before": ["<leader>", "s"], "commands": ["workbench.view.search"] },
         { "before": ["<leader>", "c"], "commands": ["marscode.chat"] },
-        { "before": ["<leader>", "o"], "commands": ["workbench.action.files.openFile"] },
     ],
     "vim.visualModeKeyBindings": [
         { "before": ["K"], "after": ["6", "k"] },
@@ -79,11 +81,69 @@ categories = '配置文件'
 
 ## keybindings.json
 
+```json
+[
+    { "key": "ctrl+b", "command": "workbench.action.focusActiveEditorGroup" },
+    { "key": "ctrl+[", "command": "workbench.action.previousEditor" },
+    { "key": "ctrl+]", "command": "workbench.action.nextEditor" },
+    { "key": "ctrl+h", "command": "workbench.action.focusLeftGroup" },
+    { "key": "ctrl+j", "command": "workbench.action.focusBelowGroup" },
+    { "key": "ctrl+k", "command": "workbench.action.focusAboveGroup" },
+    { "key": "ctrl+l", "command": "workbench.action.focusRightGroup" },
+    { "key": "ctrl+i", "command": "workbench.action.createTerminalEditor" },
+]
+```
+
 
 
 ## tasks.json
 
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Task A",
+            "type": "shell",
+            "command": "python3",
+            "args": [ "main.py" ],
+            "options": { "cwd": "${workspaceFolder}" }
+        },
+		{
+            "label": "Task B",
+            "type": "shell",
+            "command": "python3",
+            "args": [ "test.py" ],
+            "options": { "cwd": "${workspaceFolder}" },
+			"dependsOn": ["Task A"]
+        },
+    ]
+}
+```
+
 
 
 ## launch.json
+
+### Python
+
+```json
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "name": "Debug Python",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+			"args": [
+				"-c",
+				"xxxxxx"
+			],
+            "console": "integratedTerminal",
+			"justMyCode": true,
+        },
+    ]
+}
+```
 
