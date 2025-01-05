@@ -5,6 +5,11 @@ title = 'vscode配置文件'
 categories = '配置文件'
 +++
 
+## Workflow tips
+
+* 在相邻的两个Tab之间切换, 可以使用`ctrl+tab`.
+
+
 
 ## settings.json
 
@@ -29,6 +34,8 @@ categories = '配置文件'
     "workbench.iconTheme": "material-icon-theme",
     "workbench.productIconTheme": "developer-icons",
     "workbench.tree.indent": 35,
+    
+    "explorer.openEditors.visible": 1,
 
     "terminal.integrated.fontSize": 18,
     "terminal.integrated.lineHeight": 1.5,
@@ -39,7 +46,12 @@ categories = '配置文件'
         "workbench.action.focusRightGroup",
         "workbench.action.focusBelowGroup",
         "workbench.action.focusAboveGroup",
+        "workbench.action.toggleZenMode",
     ],
+    "zenMode.hideLineNumbers": false,
+	"zenMode.centerLayout": false,
+	"zenMode.showTabs": "none",
+	"zenMode.fullScreen": false,
 
     "vim.hlsearch": true,
     "vim.incsearch": true,
@@ -58,11 +70,16 @@ categories = '配置文件'
         { "before": ["<leader>", "w"], "commands": ["workbench.action.tasks.runTask"] },
         { "before": ["<leader>", "e"], "commands": ["workbench.view.explorer"] },
         { "before": ["<leader>", "a"], "commands": ["workbench.action.createTerminalEditorSide"] },
-        { "before": ["<leader>", "f"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "f"], "commands": ["workbench.view.search"] },
         { "before": ["<leader>", "x"], "commands": ["workbench.action.debug.selectandstart"] },
         { "before": ["<leader>", "d"], "commands": ["workbench.debug.action.toggleRepl"] },
-        { "before": ["<leader>", "s"], "commands": ["workbench.view.search"] },
-        { "before": ["<leader>", "c"], "commands": ["marscode.chat"] },
+        { "before": ["<leader>", "p"], "commands": [
+            "workbench.action.openPreviousEditorFromHistory",
+            "workbench.action.quickOpenNavigateNext"
+        ]},
+        { "before": ["<leader>", "s"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["<leader>", "m"], "commands": ["workbench.action.toggleEditorWidths"] },
+        { "before": ["<leader>", "z"], "commands": ["workbench.action.toggleZenMode"] },
     ],
     "vim.visualModeKeyBindings": [
         { "before": ["K"], "after": ["6", "k"] },
@@ -91,6 +108,10 @@ categories = '配置文件'
     { "key": "ctrl+k", "command": "workbench.action.focusAboveGroup" },
     { "key": "ctrl+l", "command": "workbench.action.focusRightGroup" },
     { "key": "ctrl+i", "command": "workbench.action.createTerminalEditor" },
+    { "key": "ctrl+z", "command": "workbench.debug.action.toggleReplorkbench.action.toggleZenMode" },
+    { "key": "ctrl+m", "command": "workbench.action.toggleEditorWidths" },
+    { "key": "ctrl+t", "command": "workbench.action.tasks.runTask" },
+    { "key": "ctrl+s", "command": "workbench.action.quickOpen" },
 ]
 ```
 
@@ -102,23 +123,52 @@ categories = '配置文件'
 {
     "version": "2.0.0",
     "tasks": [
-        {
+      	{
             "label": "Task A",
             "type": "shell",
             "command": "python3",
             "args": [ "main.py" ],
             "options": { "cwd": "${workspaceFolder}" }
         },
-		{
-            "label": "Task B",
+        {
+            "label": "(Utils) FZF Show External File Path",
             "type": "shell",
-            "command": "python3",
-            "args": [ "test.py" ],
-            "options": { "cwd": "${workspaceFolder}" },
-			"dependsOn": ["Task A"]
+            "command": "fd -H ${input:prompt} ${input:start_path} | fzf",
+            "problemMatcher": []
         },
+        {
+            "label": "(Utils) FZF Open External Dir in System Explorer",
+            "type": "shell",
+            "command": "fd -H ${input:prompt} ${input:start_path} | fzf | xargs dirname | xargs open",
+            "problemMatcher": []
+        },
+        {
+            "label": "(Utils) FZF Open External File in Vscode",
+            "type": "shell",
+            "command": "fd -H ${input:prompt} ${input:start_path} | fzf | xargs code -r",
+            "problemMatcher": []
+        },
+        {
+            "label": "(Utils) FZF Open External md in Typora",
+            "type": "shell",
+            "command": "fd -H ${input:prompt} ${input:start_path} -e md | fzf | xargs open -a typora",
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "prompt",
+            "type": "promptString",
+            "description": "Input some cues about your file/dir"
+        },
+        {
+            "id": "start_path",
+            "type": "promptString",
+            "description": "Input the start path for search"
+        }
     ]
 }
+
 ```
 
 
