@@ -1,0 +1,5 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'B1ueDrops Site'
+theme = 'stack'
+markup.highlight.style = 'github'
