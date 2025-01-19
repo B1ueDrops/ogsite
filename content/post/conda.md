@@ -1,7 +1,7 @@
 +++
 date = '2025-01-10T14:34:00+08:00'
 draft = false
-title = 'Conda工作流'
+title = 'Anaconda的正确使用'
 categories = 'conda'
 
 +++

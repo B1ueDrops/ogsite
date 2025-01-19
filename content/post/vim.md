@@ -1,7 +1,7 @@
 +++
 date = '2025-01-18T18:33:54+08:00'
 draft = false
-title = 'Vim实用技巧'
+title = 'Vim文本编辑方法'
 
 +++
 
